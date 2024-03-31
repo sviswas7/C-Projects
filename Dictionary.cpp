@@ -1,77 +1,35 @@
-#include <iostream>
 #include "Dictionary.h"
+#include <iostream>
 using namespace std;
 
-void printMainMenu();
-void addData(Dictionary& dict, string word, string definition);
-void printAll(Dictionary& dict);
-
-int main()
-
+void Dictionary::addDefinition(string word, string definition)
 {
-	Dictionary dict;
-	int userInput;
-	string word;
-	string definition;
+	this->dictionary[word] = definition;
+}
+string Dictionary::getDefinition(string word) const
+{
+	
 
-	printMainMenu();
-	cin >> userInput;
-	cin.get();
-
-	while (userInput!= 0)
+	auto findWord = dictionary.find(word);
+	
+	if(findWord != dictionary.end())
 	{
 		
-
-		if (userInput == 1)
-		{
-			cout << "Enter a Word" << endl;
-			getline(cin,word);
-			cout << "Enter a definition " << endl;
-			getline(cin,definition);
-			addData(dict, word, definition);
-		}
-		else if (userInput == 2)
-		{
-			printAll(dict);
-		}
-		else if (userInput == 3)
-		{
-			getline(cin,word);
-			dict.getDefinition(word);
-			
-		}
-		else
-		{
-			break;
-		}
-
-		// Next round
-		printMainMenu();
-		cin >> userInput;
-		cin.get();
+		cout << findWord->second << endl;
+		
 	}
-	
-	return 0;
-}
+	else
+	{
+		cout << "NOT FOUND!" << endl;
+	}
 
-void printMainMenu()
-{
-		cout << "\tWhat would you like to do?" << endl;
-		cout << "\t1 = A word and definition" << endl;
-		cout << "\t2 = Print All definitions" << endl;
-		cout << "\t3 = Get a definition for a word" << endl;
-		cout << "\t0 = To exit" << endl;
+	return "";
 	
 }
-
-void addData(Dictionary& dict, string word, string definition)
+void Dictionary::printAll() const
 {
-	
-		dict.addDefinition(word, definition);
-}
-
-void printAll(Dictionary& dict)
-{
-	dict.printAll();
-
+	for (auto definition : dictionary)
+	{
+		cout << definition.first << " = " << definition.second << endl;
+	}
 }
